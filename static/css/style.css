@@ -1,0 +1,383 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Quicksand", sans-serif;
+    
+}
+
+body{   
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background-image: url("/static/img/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.imagem2{
+    position: absolute;
+    left: -100px ;
+    top: 90px;
+}
+
+.imagem2 img{
+    width: 700px;
+    height:150px;
+    object-fit: cover;
+}
+
+.texto-fundo{
+    position: absolute;
+    left: 80px;
+    top: 250px;
+    color: white;
+    font-size: 40px;
+    font-weight: lighter;
+}
+
+.login-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(119deg,rgba(40, 45, 79, 1) 0%, rgba(3, 5, 3, 1) 79%, rgba(196, 0, 0, 1) 100%);
+    width: 400px;
+    height: 550px;
+    margin: 0 auto;
+    margin-top: 25px;
+    margin-left: 830px;
+    border-color: white;
+}
+
+
+.bem-vindo{
+    font-size: 24px;
+    margin-right: 150px;
+    color: white;
+    margin-bottom: 20px;
+    font-family: "Quicksand", sans-serif;
+}
+
+.logo { 
+    height: 300px;
+    width: 400px;
+    margin-top: -130px;
+    margin-left: -120px; 
+}
+
+
+.input-login{
+    margin-top: -100px;
+    margin-left: 0px;
+    border: none;
+    outline: none;
+}
+
+.input-email{
+    position: relative;
+}
+.input-email i{
+    position: absolute;
+    left: 8px;
+    top: 17px;
+    color: white;
+    
+}
+
+.input-email input{
+    padding-left: 30px;
+}
+
+.input-senha{
+    position: relative;
+}
+
+.input-senha input{
+    padding-left: 30px;
+}
+
+.input-senha i{
+    position: absolute;
+    left: 10px;
+    top: 17px;
+    color: white;
+}
+
+.nome {
+    margin-bottom: 12px;   
+    width: 270px;
+    height: 50px;
+    border-radius: 10px;
+    background: linear-gradient(90deg,rgba(52, 52, 69, 1) 35%, rgba(6, 7, 20, 1) 89%);
+    
+    outline: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.botao button{
+    margin-top: 25px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(87deg,rgba(247, 0, 0, 1) 0%, rgba(34, 36, 59, 1) 88%);
+    width: 270px;
+    height: 50px;   
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+    color: white;
+
+}
+
+.botao-texto{
+    font-size: 18px;
+    font-weight: bold;
+    
+}
+
+
+.extra {
+    color: rgb(100, 100, 100);
+    margin-top: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.extra a {
+    color: #4e73df;
+    text-decoration: none;
+    
+}
+
+.cadastre{
+    color: #ff0000;
+    text-decoration: none;
+    font-size: 16px;
+    
+}
+
+
+/*PÁGINA DE CADASTRO*/
+
+
+
+.body-cadastro {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background-image: url("/static/img/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: "Quicksand", sans-serif;
+}
+
+.box-usuario a{
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+}
+
+.logo2{
+width: 370px;
+height: 370px;
+transition: transform 0.3s;
+}
+
+.logo2:hover {
+    transform: scale(1.05);
+}
+
+.box-usuario{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left:60px ;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(119deg,rgba(40, 45, 79, 1) 0%, rgba(3, 5, 3, 1) 79%, rgba(196, 0, 0, 1) 100%);
+    width: 400px;
+    height: 550px;   
+    margin-top: 25px;  
+    border-color: white;
+}
+
+.titulo-login{
+margin-left: 70px;
+
+}
+
+.box-cadastro{
+margin-top: 20px;
+}
+
+.nome2{
+    margin-bottom: 12px;   
+    width: 270px;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    padding-left:10px ;
+    background: linear-gradient(90deg,rgba(52, 52, 69, 1) 35%, rgba(6, 7, 20, 1) 89%);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.botao-cadastrar:hover{
+    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+
+.botao-cadastrar{
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(177deg,rgba(204, 0, 0, 1) 0%, rgba(28, 6, 4, 1) 100%);
+    width: 270px;
+    height: 50px;
+    padding-left:10px ;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    
+
+    position: relative;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+}
+
+.glitch {
+    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+    -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+    0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+}
+
+.glitch:hover {
+    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-4px, 4px);
+  }
+  40% {
+    transform: translate(-4px, -4px);
+  }
+  60% {
+    transform: translate(4px, 4px);
+  }
+  80% {
+    transform: translate(4px, -4px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+
+
+@media (max-width: 768px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-position: center;
+    }
+
+    .imagem2 {
+        position: static;
+        margin-bottom: 10px;
+    }
+
+    .imagem2 img {
+        width: 500px;
+        height: auto;
+    }
+
+    .texto-fundo {
+        display: none;
+    }
+
+    .login-box {
+        width: 100%;
+        max-width: 360px;
+        height: 500px;
+        margin: 0;
+        padding: 25px;
+    }
+
+    .bem-vindo {
+        display: none;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .input-login {
+        margin-top: 60px;
+        width: 100%;
+    }
+
+    .nome {
+        width: 100%;
+    }
+
+    .botao button {
+        width: 100%;
+    }
+
+    .body-cadastro {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .box-titulo {
+        margin-top: 0;
+        text-align: center;
+    }
+
+    .logo2 {
+        width: 220px;
+        height: auto;
+    }
+
+    .box-usuario {
+        width: 100%;
+        max-width: 360px;
+        height: auto;
+        margin-left: 0;
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    .box-cadastro {
+        margin-top: 20px;
+    }
+
+    .nome2 {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .botao-cadastrar {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <script src="{{ url_for('static', filename='js/slider.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+    <body>
+            <div class="imagem2">               
+                <img class="logo3" src="{{ url_for('static', filename='img/Logo Divinfo Site.png') }}">
+            </div>
+
+            <div class="texto-fundo">
+                <a class="titulo-fundo">Tecnologia,<br>Inovação<br>e Confiança</a>
+            </div>
+        
+            <div class="login-box">
+                <p class="bem-vindo">Bem-vindo à</p>
+                <img class="logo" src="{{ url_for('static', filename='img/logo.png') }}">
+                
+                    <div class="input-login">
+                        <form action="/autenticar" method="POST">     
+                            <div class="input-email">
+                                <i class="fa-solid fa-envelope"></i>                 
+                                <input class="nome" type="email" name="email" placeholder="E-mail">
+                            </div> 
+                            <div class="input-senha">
+                                <i class="fa-solid fa-lock"></i>
+                                <input class="nome" type="password" name="senha" placeholder="Senha">
+                            </div>
+                            <div class="botao">
+                                <button type="submit">
+                                    <span class="botao-texto">Entrar</span>
+                                </button>                   
+                            </div>            
+                    </div>      
+                </form>
+                    <p class="extra">
+                        Não tem conta?                       
+                    </p>
+                    <a class="cadastre"href="/cadastro">Criar conta</a>
+            </div>
+        
+           
+
+    </body>
+</html>
