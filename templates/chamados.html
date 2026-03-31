@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Chamados</title>
+    <button id="toggle-dark">🌙</button>
+    <link rel="icon" href="{{ url_for('static', filename='img/signal-solid.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chamados.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Iosevka+Charon:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="topo">
+        <h1>Chamados</h1>
+        <button class="btn-abrir" onclick="abrirModal()">+ Novo Chamado</button>
+    </div>
+
+    <div class="filtros">
+        <input type="text" placeholder="Buscar chamado...">
+
+        <select>
+            <option>Status</option>
+            <option>Aberto</option>
+            <option>Em andamento</option>
+            <option>Fechado</option>
+        </select>
+
+        <select>
+            <option>Prioridade</option>
+            <option>Alta</option>
+            <option>Média</option>
+            <option>Baixa</option>
+        </select>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Criado por</th>
+                <th>Atribuído para</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for chamado in chamados %}
+            <tr>
+                <td>#{{ chamado[0] }}</td>
+                <td>{{ chamado[1] }}</td>
+                <td>{{ chamado[2] }}</td>
+                <td>{{ chamado[3] }}</td>
+                <td>{{ chamado[4] }}</td>
+                <td>
+                    <a href="/deletar/{{ chamado[0] }}">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-conteudo">
+
+    <span class="fechar" onclick="fecharModal()">&times;</span>
+
+    <h2>Novo Chamado</h2>
+
+    <form action="/criar_chamado" method="POST">
+        <input type="text" name="titulo" placeholder="Título" required>
+        <textarea name="descricao" placeholder="Descrição" required></textarea>
+        <button type="submit">Salvar</button>
+    </form>
+
+    </div>
+</div>
+
+<script>
+function abrirModal() {
+    document.getElementById("modal").style.display = "block";
+}
+
+function fecharModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+// fechar clicando fora
+window.onclick = function(event) {
+    let modal = document.getElementById("modal");
+    if (event.target == modal) {
+    modal.style.display = "none";
+    }
+}
+</script>
+
+<form action="/criar_chamado" method="POST">
+    <input type="text" name="titulo" placeholder="Título" required>
+    <textarea name="descricao" placeholder="Descrição" required></textarea>
+
+    <select name="atribuido_para" required>
+    <option value="">Selecione um usuário</option>
+    {% for usuario in usuarios %}
+        <option value="{{ usuario[0] }}">{{ usuario[1] }}</option>
+    {% endfor %}
+    </select>
+
+    <button type="submit">Salvar</button>
+</form>
+
+</body>
+</html>

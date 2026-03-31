@@ -1,0 +1,129 @@
+body {
+    font-family:"Iosevka Charon", monospace;
+    background: #0f172a;
+    color: white;
+    margin: 0;
+}
+
+.container {
+    padding: 20px;
+}
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: "Iosevka Charon", monospace;;
+}
+
+.btn {
+    background: #69a0f8;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-family: "Iosevka Charon", monospace;
+}
+
+.filtros {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+input, select {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1e293b;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+tr {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* PRIORIDADE */
+.alta { color: red; }
+.media { color: orange; }
+.baixa { color: green; }
+
+/* STATUS */
+.aberto { color: #3b82f6; }
+.andamento { color: orange; }
+.fechado { color: gray; }
+
+/* BOTÃO */
+.btn-abrir {
+  padding: 10px 20px;
+  background: #6c63ff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+/* FUNDO ESCURO */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* CAIXA */
+.modal-conteudo {
+  background: #1a1a1a;
+  margin: 10% auto;
+  padding: 20px;
+  width: 400px;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+}
+
+/* BOTÃO FECHAR */
+.fechar {
+  float: right;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+/* INPUTS */
+.modal input,
+.modal textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #2a2a2a;
+  color: white;
+}
+
+/* BOTÃO */
+.modal button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  background: #6c63ff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}

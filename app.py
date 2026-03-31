@@ -19,6 +19,20 @@ def criar_banco():
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS chamados (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titulo TEXT NOT NULL,
+            descricao TEXT NOT NULL,
+            STATUS TEXT NOT NULL DEFAULT 'Aberto',
+            prioridade TEXT NOT NULL DEFAULT 'Média',
+            criado_por INTEGER NOT NULL,
+            atribuido_para INTEGER NOT NULL,
+            FOREIGN KEY(criado_por) REFERENCES usuarios(id),
+            FOREIGN KEY(atribuido_para) REFERENCES usuarios(id)
+        )
+    """)
+
     conexao.commit()
     conexao.close()
 
@@ -74,21 +88,74 @@ def autenticar():
     conexao.close()
 
     if usuario:
+        session["usuario_id"] = usuario[0]
         session["usuario"] = usuario[1]
-        return redirect(url_for("painel"))
+        return redirect(url_for("chamados"))
     else:
         return "Email ou senha incorretos."
 
 
-@app.route("/painel")
-def painel():
-    if "usuario" in session:
-        return f"Bem-vinda, {session['usuario']}! Login feito com sucesso."
-    return redirect(url_for("login"))
+@app.route("/chamados")
+def chamados():
+    if "usuario_id" not in session:    
+        return redirect(url_for("login"))
 
+    conexao = sqlite3.connect("usuarios.db")
+    cursor = conexao.cursor()
+
+    usuario_id = session["usuario_id"]
+
+    cursor.execute("""
+        SELECT 
+            c.id,
+            c.titulo,
+            c.descricao,
+            u1.usuario AS criador,
+            u2.usuario AS atribuido
+        FROM chamados c
+        JOIN usuarios u1 ON c.criado_por = u1.id
+        JOIN usuarios u2 ON c.atribuido_para = u2.id
+        ORDER BY c.id DESC
+    """)
+
+    chamados = cursor.fetchall()
+
+    cursor.execute("SELECT id, usuario FROM usuarios ORDER BY usuario")
+    usuarios = cursor.fetchall()
+
+    conexao.close()
+
+    return render_template("chamados.html", chamados=chamados, usuarios=usuarios)
+
+
+@app.route("/criar_chamado", methods=["POST"])
+def criar_chamado():
+    if "usuario_id" not in session:
+        return redirect(url_for("login"))
+
+    titulo = request.form["titulo"]
+    descricao = request.form["descricao"]
+    atribuido_para = request.form["atribuido_para"]
+    criado_por = session["usuario_id"]
+    prioridade = request.form["prioridade"]
+    status = "Aberto"
+
+    conexao = sqlite3.connect("usuarios.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+        INSERT INTO chamados (titulo, descricao, prioridade, status, criado_por, atribuido_para)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (titulo, descricao, prioridade, status, criado_por, atribuido_para))
+
+    conexao.commit()
+    conexao.close()
+
+    return redirect(url_for("chamados"))
 
 @app.route("/logout")
 def logout():
+    session.pop("usuario_id", None)
     session.pop("usuario", None)
     return redirect(url_for("login"))
 
