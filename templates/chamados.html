@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <title>Chamados</title>
     <button id="toggle-dark">🌙</button>
+    
     <link rel="icon" href="{{ url_for('static', filename='img/signal-solid.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chamados.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Iosevka+Charon:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-
+<a href="{{ url_for('logout') }}" class="btn-logout">Sair</a>
 <div class="container">
 
     <div class="topo">
         <h1>Chamados</h1>
         <button class="btn-abrir" onclick="abrirModal()">+ Novo Chamado</button>
+        
     </div>
 
     <div class="filtros">
@@ -28,7 +32,7 @@
             <option>Em andamento</option>
             <option>Fechado</option>
         </select>
-
+        
         <select>
             <option>Prioridade</option>
             <option>Alta</option>
@@ -43,6 +47,8 @@
                 <th>ID</th>
                 <th>Título</th>
                 <th>Descrição</th>
+                <th>Status</th>
+                <th>Prioridade</th>
                 <th>Criado por</th>
                 <th>Atribuído para</th>
                 <th>Ações</th>
@@ -57,8 +63,27 @@
                 <td>{{ chamado[2] }}</td>
                 <td>{{ chamado[3] }}</td>
                 <td>{{ chamado[4] }}</td>
+                <td>{{ chamado[5] }}</td>
+                <td>{{ chamado[6] }}</td>
+                <td>{{ chamado[7] }}</td>
+                <td>{{ chamado[8] }}</td>
+
                 <td>
-                    <a href="/deletar/{{ chamado[0] }}">Excluir</a>
+                {% if session["usuario_id"] == chamado[5] %}
+                    <button
+                    type="button"
+                    class="btn-editar"
+                    onclick="abrirModalEditar(
+                        '{{ chamado[0] }}',
+                        '{{ chamado[1] }}',
+                        `{{ chamado[2] }}`,
+                        '{{ chamado[3] }}',
+                        '{{ chamado[4] }}',
+                        '{{ chamado[6] }}'
+                    )">
+                    Editar
+                    </button>
+                {% endif %}
                 </td>
             </tr>
             {% endfor %}
@@ -67,6 +92,8 @@
 
 </div>
 
+
+
 <div id="modal" class="modal">
     <div class="modal-conteudo">
 
@@ -74,18 +101,45 @@
 
     <h2>Novo Chamado</h2>
 
-    <form action="/criar_chamado" method="POST">
-        <input type="text" name="titulo" placeholder="Título" required>
-        <textarea name="descricao" placeholder="Descrição" required></textarea>
-        <button type="submit">Salvar</button>
-    </form>
+    <form action="/criar_chamado" method="POST" class="form-chamado">    
+        <input  type="text"  name="titulo" placeholder="Título" class="campo campo-titulo"required>
+        <textarea name="descricao" placeholder="Descrição" class="campo campo-descricao"required></textarea>
 
+        <p>selecione a prioridade:</p>
+        
+        <select name="prioridade" class="campo campo-select campo-prioridade"required>
+        <option value="" disabled selected>Selecione uma prioridade</option>
+        <option value="Alta">Alta</option>
+        <option value="Média">Média</option>
+        <option value="Baixa">Baixa</option>
+        </select>
+
+        <p>selecione o status</p>
+        <select name="status" class="campo campo-select campo-status"required>
+        <option value="" disabled selected>Selecione um status</option>
+        <option value="Aberto">Aberto</option>
+        <option value="Em andamento">Em andamento</option>
+        <option value="Fechado">Fechado</option>
+        </select>
+
+        <p>selecione o usuário atribuído:</p>
+        <select name="atribuido_para" class="campo campo-select campo-usuario"required>
+        <option value="" disabled selected>Selecione um usuário</option>
+
+        {% for usuario in usuarios %}
+        <option value="{{ usuario[0] }}">{{ usuario[1] }}</option>
+        {% endfor %}
+
+        </select>
+
+        <button type="submit" class="btn-salvar-chamado">Salvar</button>
+    </form>
     </div>
 </div>
 
 <script>
 function abrirModal() {
-    document.getElementById("modal").style.display = "block";
+    document.getElementById("modal").style.display = "flex";
 }
 
 function fecharModal() {
@@ -101,19 +155,69 @@ window.onclick = function(event) {
 }
 </script>
 
-<form action="/criar_chamado" method="POST">
-    <input type="text" name="titulo" placeholder="Título" required>
-    <textarea name="descricao" placeholder="Descrição" required></textarea>
+<div id="modalEditar" class="modal">
+    <div class="modal-conteudo">
+        <span class="fechar" onclick="fecharModalEditar()">&times;</span>
 
-    <select name="atribuido_para" required>
-    <option value="">Selecione um usuário</option>
-    {% for usuario in usuarios %}
-        <option value="{{ usuario[0] }}">{{ usuario[1] }}</option>
-    {% endfor %}
-    </select>
+    <h2>Editar Chamado</h2>
 
-    <button type="submit">Salvar</button>
-</form>
+    <form id="formEditar" method="POST">
+        <input type="text" name="titulo" id="editar_titulo" placeholder="Título" class="campo" required>
+
+        <textarea name="descricao" id="editar_descricao" placeholder="Descrição" class="campo" required></textarea>
+
+        <p>Selecione a prioridade:</p>
+        <select name="prioridade" id="editar_prioridade" class="campo campo-select" required>
+            <option value="Alta">Alta</option>
+            <option value="Média">Média</option>
+            <option value="Baixa">Baixa</option>
+        </select>
+
+        <p>Selecione o status:</p>
+        <select name="status" id="editar_status" class="campo campo-select" required>
+            <option value="Aberto">Aberto</option>
+            <option value="Em andamento">Em andamento</option>
+            <option value="Fechado">Fechado</option>
+        </select>
+
+        <p>Selecione o usuário atribuído:</p>
+        <select name="atribuido_para" id="editar_atribuido_para" class="campo campo-select" required>
+            {% for usuario in usuarios %}
+            <option value="{{ usuario[0] }}">{{ usuario[1] }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn-salvar-chamado">Salvar alterações</button>
+    </form>
+    </div>
+</div>
+
+<script>
+function abrirModalEditar(id, titulo, descricao, status, prioridade, atribuidoPara) {
+    document.getElementById("modalEditar").style.display = "block";
+
+    document.getElementById("editar_titulo").value = titulo;
+    document.getElementById("editar_descricao").value = descricao;
+    document.getElementById("editar_status").value = status;
+    document.getElementById("editar_prioridade").value = prioridade;
+    document.getElementById("editar_atribuido_para").value = atribuidoPara;
+
+    document.getElementById("formEditar").action = "/editar_chamado/" + id;
+}
+
+function fecharModalEditar() {
+    document.getElementById("modalEditar").style.display = "none";
+}
+
+
+
+window.onclick = function(event) {
+    let modal = document.getElementById("modalEditar");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 
 </body>
 </html>

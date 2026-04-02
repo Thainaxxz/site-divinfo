@@ -1,5 +1,6 @@
 body {
-    font-family:"Iosevka Charon", monospace;
+    font-family:"Quicksand", sans-serif;
+    
     background: #0f172a;
     color: white;
     margin: 0;
@@ -13,7 +14,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: "Iosevka Charon", monospace;;
+    font-family: "Quicksand", sans-serif;
+    
 }
 
 .btn {
@@ -22,7 +24,8 @@ body {
     border-radius: 8px;
     color: white;
     text-decoration: none;
-    font-family: "Iosevka Charon", monospace;
+    font-family: "Quicksand", sans-serif;
+    
 }
 
 .filtros {
@@ -31,10 +34,30 @@ body {
     gap: 10px;
 }
 
-input, select {
+input {
     padding: 8px;
     border-radius: 6px;
     border: none;
+
+    width: 450px;
+    height: 11px;
+
+    font-family: "Quicksand", sans-serif;
+
+    background-color: #ffffff;
+}
+
+select {
+    padding: 7px;
+    border-radius: 6px;
+    border: none;
+
+    height: 28px;
+
+    font-family: "Quicksand", sans-serif;
+    
+    font-size: 12px;
+    background-color: #ffffff;
 }
 
 table {
@@ -75,26 +98,33 @@ tr {
 }
 
 /* FUNDO ESCURO */
-.modal {
+.modal { 
   display: none;
+
   position: fixed;
   z-index: 999;
   left: 0;
   top: 0;
+
   width: 100%;
   height: 100%;
+
   background: rgba(0, 0, 0, 0.7);
+
+  justify-content: center;
+  align-items: flex-start;  
+
 }
 
 /* CAIXA */
 .modal-conteudo {
   background: #1a1a1a;
-  margin: 10% auto;
   padding: 20px;
   width: 400px;
   border-radius: 12px;
   color: white;
-  box-shadow: 0 0 20px rgba(108, 99, 255, 0.3);
+  box-shadow: 0 0 20px rgba(108, 99, 255, 0.3); 
+  
 }
 
 /* BOTÃO FECHAR */
@@ -108,12 +138,16 @@ tr {
 .modal input,
 .modal textarea {
   width: 100%;
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 5px;
+  padding: 5px;
   border-radius: 8px;
   border: none;
   background: #2a2a2a;
   color: white;
+}
+
+p {
+  margin-bottom: 1px; /* diminui o espaço abaixo do texto */
 }
 
 /* BOTÃO */
@@ -126,4 +160,91 @@ tr {
   border-radius: 8px;
   color: white;
   cursor: pointer;
+}
+
+.status {
+  width: 100%;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 8px;
+  border: none;
+  background: #2a2a2a;
+  color: white;
+}
+
+
+.form-chamado {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.campo {
+    width: 100%;
+    height: 30px;
+    padding: 0 12px;
+    border: 1px solid #6c63ff;
+    border-radius: 10px;
+    background-color: #081633;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+  }
+
+.campo::placeholder {
+  color: #9aa4b2;
+}
+
+.campo:focus {
+  border-color: #7b61ff;
+  box-shadow: 0 0 0 3px rgba(123, 97, 255, 0.15);
+}
+
+.campo-select option {
+  color: white;
+  background: #081633;
+}
+.campo-descricao {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.campo-select {
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.btn-salvar-chamado {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #7b61ff;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-salvar-chamado:hover {
+  background: #694df0;
+}
+
+.modal-conteudo h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #7b61ff;
+}
+
+.btn-editar {
+  padding: 8px 14px;
+  background: #f0ad4e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-editar:hover {
+  background: #d99635;
 }

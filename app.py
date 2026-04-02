@@ -105,13 +105,15 @@ def chamados():
     conexao = sqlite3.connect("usuarios.db")
     cursor = conexao.cursor()
 
-    usuario_id = session["usuario_id"]
-
     cursor.execute("""
         SELECT 
             c.id,
             c.titulo,
             c.descricao,
+            c.status,
+            c.prioridade,   
+            c.criado_por,
+            c.atribuido_para,
             u1.usuario AS criador,
             u2.usuario AS atribuido
         FROM chamados c
@@ -137,29 +139,108 @@ def criar_chamado():
 
     titulo = request.form["titulo"]
     descricao = request.form["descricao"]
-    atribuido_para = request.form["atribuido_para"]
-    criado_por = session["usuario_id"]
+    status = request.form["status"]
     prioridade = request.form["prioridade"]
-    status = "Aberto"
+    criado_por = session["usuario_id"]
+    atribuido_para = request.form["atribuido_para"]
+    
+    
 
     conexao = sqlite3.connect("usuarios.db")
     cursor = conexao.cursor()
 
     cursor.execute("""
-        INSERT INTO chamados (titulo, descricao, prioridade, status, criado_por, atribuido_para)
+        INSERT INTO chamados (titulo, descricao, status, prioridade, criado_por, atribuido_para)
         VALUES (?, ?, ?, ?, ?, ?)
-    """, (titulo, descricao, prioridade, status, criado_por, atribuido_para))
+    """, (titulo, descricao, status, prioridade, criado_por, atribuido_para))
 
     conexao.commit()
     conexao.close()
 
     return redirect(url_for("chamados"))
 
+
+
+@app.route("/atualizar_chamado/<int:id>", methods=["POST"])
+def atualizar_chamado(id):
+    if "usuario_id" not in session:
+        return redirect(url_for("login"))
+
+    conexao = sqlite3.connect("usuarios.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("SELECT criado_por FROM chamados WHERE id = ?", (id,))
+    chamado = cursor.fetchone()
+
+    if not chamado:
+        conexao.close()
+        return "Chamado não encontrado."
+
+    if chamado[0] != session["usuario_id"]:
+        conexao.close()
+        return "Você não tem permissão para editar este chamado."
+
+    titulo = request.form["titulo"]
+    descricao = request.form["descricao"]
+    status = request.form["status"]
+    prioridade = request.form["prioridade"]
+    atribuido_para = request.form["atribuido_para"]
+
+    cursor.execute("""
+        UPDATE chamados
+        SET titulo = ?, descricao = ?, status = ?, prioridade = ?, atribuido_para = ?
+        WHERE id = ?
+    """, (titulo, descricao, status, prioridade, atribuido_para, id))
+
+    conexao.commit()
+    conexao.close()
+
+    return redirect(url_for("chamados"))
+
+@app.route("/editar_chamado/<int:id>", methods=["POST"])
+def editar_chamado(id):
+    if "usuario_id" not in session:
+        return redirect(url_for("login"))
+
+    conexao = sqlite3.connect("usuarios.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("SELECT criado_por FROM chamados WHERE id = ?", (id,))
+    chamado = cursor.fetchone()
+
+    if not chamado:
+        conexao.close()
+        return "Chamado não encontrado."
+
+    if chamado[0] != session["usuario_id"]:
+        conexao.close()
+        return "Você não tem permissão para editar este chamado."
+
+    titulo = request.form["titulo"]
+    descricao = request.form["descricao"]
+    status = request.form["status"]
+    prioridade = request.form["prioridade"]
+    atribuido_para = request.form["atribuido_para"]
+
+    cursor.execute("""
+        UPDATE chamados
+        SET titulo = ?, descricao = ?, status = ?, prioridade = ?, atribuido_para = ?
+        WHERE id = ?
+    """, (titulo, descricao, status, prioridade, atribuido_para, id))
+
+    conexao.commit()
+    conexao.close()
+
+    return redirect(url_for("chamados"))
+
+
 @app.route("/logout")
 def logout():
     session.pop("usuario_id", None)
     session.pop("usuario", None)
     return redirect(url_for("login"))
+
+
 
 
 if __name__ == "__main__":
