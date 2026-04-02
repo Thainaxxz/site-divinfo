@@ -63,10 +63,9 @@
                 <td>{{ chamado[2] }}</td>
                 <td>{{ chamado[3] }}</td>
                 <td>{{ chamado[4] }}</td>
-                <td>{{ chamado[5] }}</td>
-                <td>{{ chamado[6] }}</td>
                 <td>{{ chamado[7] }}</td>
                 <td>{{ chamado[8] }}</td>
+                
 
                 <td>
                 {% if session["usuario_id"] == chamado[5] %}
@@ -194,7 +193,7 @@ window.onclick = function(event) {
 
 <script>
 function abrirModalEditar(id, titulo, descricao, status, prioridade, atribuidoPara) {
-    document.getElementById("modalEditar").style.display = "block";
+    document.getElementById("modalEditar").style.display = "flex";
 
     document.getElementById("editar_titulo").value = titulo;
     document.getElementById("editar_descricao").value = descricao;
